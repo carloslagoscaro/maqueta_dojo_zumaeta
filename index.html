@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zumaeta Kenpo Studio | Arte Marcial & Defensa Personal</title>
+    <meta name="description" content="Academia de Kenpo Karate y Defensa Personal en Santiago. Clases para niños, jóvenes y adultos. Agenda tu clase de prueba gratis en Zumaeta Kenpo Studio.">
+    <link rel="icon" type="image/png" href="insignia.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kenpo: {
+                            bg: '#0a0a0d',
+                            card: '#141418',
+                            cardHover: '#1c1c22',
+                            cardBorder: '#24242d',
+                            red: '#e63946',
+                            redHover: '#cc2b37',
+                            orange: '#f4a261',
+                            orangeHover: '#e78b43',
+                            gold: '#d97706',
+                            goldLight: '#fbbf24'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        heading: ['Oswald', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'glow-red': '0 0 35px -5px rgba(230, 57, 70, 0.3)',
+                        'glow-orange': '0 0 35px -5px rgba(244, 162, 97, 0.25)',
+                        'glow-gold': '0 0 35px -5px rgba(217, 119, 6, 0.25)',
+                        'card-hover': '0 12px 30px -10px rgba(0,0,0,0.8)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(120deg, #f4a261 0%, #e63946 30%, #fbbf24 55%, #e63946 80%, #f4a261 100%);
+            background-size: 220% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 7s ease-in-out infinite;
+        }
+        .hero-bg {
+            background: linear-gradient(180deg, rgba(10, 10, 13, 0.80) 0%, rgba(10, 10, 13, 0.98) 100%), 
+                        url('https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat fixed;
+        }
+        .glass-panel {
+            background: rgba(20, 20, 24, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #24242d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e63946;
+        }
+
+        /* ----- Animaciones ----- */
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes heroUp {
+            from { opacity: 0; transform: translate3d(0, 32px, 0); }
+            to { opacity: 1; transform: none; }
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: .5; scale: 1; }
+            50% { opacity: 1; scale: 1.12; }
+        }
+        @keyframes fireBreathe {
+            0%, 100% { opacity: .55; transform: translateX(-50%) scaleY(.92); }
+            50% { opacity: .95; transform: translateX(-50%) scaleY(1.06); }
+        }
+        @keyframes fireLine {
+            0%, 100% { opacity: .32; }
+            50% { opacity: .65; }
+        }
+        @keyframes emberRise {
+            0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+            10% { opacity: .95; }
+            60% { opacity: .6; }
+            100% { transform: translate3d(var(--drift, 24px), -72vh, 0) scale(.3); opacity: 0; }
+        }
+        @keyframes waRing {
+            0% { transform: scale(1); opacity: .7; }
+            100% { transform: scale(1.65); opacity: 0; }
+        }
+        @keyframes marquee {
+            to { transform: translateX(-50%); }
+        }
+        @keyframes borderGlow {
+            0%, 100% { box-shadow: 0 0 25px -10px rgba(230, 57, 70, .35); }
+            50% { box-shadow: 0 0 45px -6px rgba(230, 57, 70, .55); }
+        }
+
+        .hero-anim { opacity: 0; animation: heroUp .9s cubic-bezier(.22, 1, .36, 1) forwards; }
+        .hero-glow { animation: glowPulse 8s ease-in-out infinite; }
+
+        /* Reveal al hacer scroll (solo movimiento vertical, nunca horizontal) */
+        .reveal {
+            opacity: 0;
+            translate: 0 28px;
+            filter: blur(4px);
+            transition: opacity .8s cubic-bezier(.22, 1, .36, 1),
+                        translate .8s cubic-bezier(.22, 1, .36, 1),
+                        filter .8s cubic-bezier(.22, 1, .36, 1);
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+        .reveal.in { opacity: 1; translate: 0 0; filter: blur(0); }
+
+        /* Brillos de barrido en tarjetas */
+        .shine { position: relative; }
+        .shine::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, .09) 50%, transparent 60%);
+            transform: translateX(-120%);
+            transition: transform .9s ease;
+        }
+        .shine:hover::after { transform: translateX(120%); }
+
+        .card-popular { animation: borderGlow 4s ease-in-out infinite; }
+
+        /* Botón flotante de WhatsApp con anillo */
+        .wa-pulse::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            border: 2px solid rgba(16, 185, 129, .7);
+            animation: waRing 2.4s ease-out infinite;
+            pointer-events: none;
+        }
+
+        /* Barra de progreso de lectura */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            z-index: 60;
+            background: linear-gradient(90deg, #e63946, #f4a261, #fbbf24);
+            box-shadow: 0 0 12px rgba(244, 162, 97, .75);
+            transition: width .1s linear;
+        }
+
+        /* Navbar interactivo */
+        section[id] { scroll-margin-top: 96px; }
+        #navbar { transition: background .35s ease, box-shadow .35s ease; }
+        #navbar .nav-inner { height: 5rem; transition: height .35s cubic-bezier(.22, 1, .36, 1); }
+        #navbar.scrolled { background: rgba(10, 10, 13, .96); box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .8); }
+        #navbar.scrolled .nav-inner { height: 4rem; }
+
+        .nav-link {
+            position: relative;
+            padding: .5rem 0;
+            color: #d1d5db;
+            transition: color .25s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 100%;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #e63946, #f4a261);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s cubic-bezier(.22, 1, .36, 1);
+        }
+        .nav-link:hover, .nav-link.active { color: #f4a261; }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+        #mobile-menu {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 1.5rem;
+            transition: max-height .5s cubic-bezier(.22, 1, .36, 1), opacity .3s ease, padding .4s ease;
+        }
+        #mobile-menu.open { max-height: 34rem; opacity: 1; padding-top: 1rem; padding-bottom: 1.5rem; }
+        @media (min-width: 768px) { #mobile-menu { display: none !important; } }
+
+        /* Marquesina */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+        .marquee:hover .marquee-track { animation-play-state: paused; }
+        .marquee::before, .marquee::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .marquee::before { left: 0; background: linear-gradient(90deg, #0a0a0d, transparent); }
+        .marquee::after { right: 0; background: linear-gradient(270deg, #0a0a0d, transparent); }
+
+        /* FAQ animado */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            padding: 0 1.25rem;
+            border-top: 0 solid rgba(36, 36, 45, .4);
+            transition: max-height .45s cubic-bezier(.22, 1, .36, 1),
+                        opacity .3s ease,
+                        padding .4s ease,
+                        border-top-width .3s ease;
+        }
+        .faq-item.open { border-color: rgba(230, 57, 70, .5); }
+        .faq-item.open .faq-content {
+            opacity: 1;
+            padding-top: 1rem;
+            padding-bottom: 1.25rem;
+            border-top-width: 1px;
+        }
+
+        /* Botón volver arriba */
+        #back-to-top {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(14px);
+            transition: opacity .3s ease, transform .3s ease, visibility .3s;
+        }
+        #back-to-top.show { opacity: 1; visibility: visible; transform: none; }
+
+        /* Hero: en móvil sin parallax fixed (evita saltos en iOS) */
+        @media (max-width: 1023px), (hover: none) {
+            .hero-bg { background-attachment: scroll; }
+        }
+
+        /* Horario responsive: tabla -> tarjetas en móvil */
+        @media (max-width: 767px) {
+            #schedule-table { min-width: 0 !important; width: 100%; }
+            #schedule-table thead { display: none; }
+            #schedule-table, #schedule-table tbody, #schedule-table tr, #schedule-table td { display: block; width: 100%; }
+            #schedule-table tr {
+                background: rgba(10, 10, 13, .65);
+                border: 1px solid #24242d;
+                border-radius: 1rem;
+                padding: .5rem .9rem;
+                margin-bottom: 1rem;
+            }
+            #schedule-table tr:last-child { margin-bottom: 0; }
+            #schedule-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+                padding: .7rem .1rem !important;
+                border-bottom: 1px dashed rgba(36, 36, 45, .9);
+            }
+            #schedule-table td:last-child { border-bottom: 0; }
+            #schedule-table td::before {
+                content: attr(data-label);
+                flex-shrink: 0;
+                font-size: .6rem;
+                font-weight: 600;
+                letter-spacing: .08em;
+                text-transform: uppercase;
+                color: #9ca3af;
+            }
+            #schedule-table td:first-child {
+                justify-content: flex-start;
+                color: #f4a261;
+                font-size: .85rem;
+                border-bottom: 1px solid rgba(36, 36, 45, .9);
+            }
+            #schedule-table td:first-child::before { display: none; }
+            #schedule-table td > span { text-align: right; }
+        }
+
+        /* Preloader de marca */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #0a0a0d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            transition: opacity .5s ease, visibility .5s ease;
+        }
+        #preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-ring { position: relative; width: 96px; height: 96px; display: grid; place-items: center; }
+        .preloader-ring::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; border: 1px solid rgba(244, 162, 97, .25); }
+        .preloader-ring::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            border: 2px solid transparent;
+            border-top-color: #e63946;
+            border-right-color: #f4a261;
+            animation: spin 1.1s linear infinite;
+        }
+        .preloader-bar { width: 180px; height: 2px; border-radius: 9999px; background: rgba(255, 255, 255, .08); overflow: hidden; }
+        .preloader-bar span { display: block; height: 100%; width: 40%; background: linear-gradient(90deg, #e63946, #f4a261); animation: loaderSlide 1.1s ease-in-out infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes loaderSlide { 0% { transform: translateX(-110%); } 100% { transform: translateX(320%); } }
+
+        /* Detalles gráficos */
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+        .hero-badge-img { animation: floatY 5.5s ease-in-out infinite; }
+        .kanji-watermark {
+            position: absolute;
+            font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: .05em;
+            color: rgba(255, 255, 255, .035);
+            pointer-events: none;
+            user-select: none;
+        }
+        .cta-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 55%;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .22), transparent);
+            transform: translateX(-180%) skewX(-18deg);
+            animation: ctaShimmer 5.5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 6;
+        }
+        @keyframes ctaShimmer {
+            0%, 62% { transform: translateX(-180%) skewX(-18deg); }
+            100% { transform: translateX(320%) skewX(-18deg); }
+        }
+
+        /* Hero: spotlight y lienzo de partículas */
+        #hero-spotlight {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .5s ease;
+            background: radial-gradient(650px circle at var(--mx, 50%) var(--my, 35%), rgba(244, 162, 97, .13), transparent 65%);
+        }
+        #inicio:hover #hero-spotlight { opacity: 1; }
+        @media (hover: none) { #hero-spotlight { display: none; } }
+
+        /* Hero: brasas y resplandor de fuego */
+        #hero-fire-glow {
+            position: absolute;
+            left: 50%;
+            bottom: -7rem;
+            width: 140%;
+            max-width: 1100px;
+            height: 28rem;
+            z-index: 0;
+            transform: translateX(-50%);
+            pointer-events: none;
+            background:
+                radial-gradient(50% 80% at 50% 100%, rgba(230, 57, 70, .4), rgba(230, 57, 70, .16) 45%, transparent 72%),
+                radial-gradient(32% 58% at 50% 100%, rgba(251, 191, 36, .24), transparent 70%);
+            filter: blur(26px);
+            animation: fireBreathe 9s ease-in-out infinite;
+        }
+        #hero-fire-line {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: min(92%, 1000px);
+            height: 1px;
+            z-index: 1;
+            transform: translateX(-50%);
+            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(244, 162, 97, .55) 30%, rgba(255, 209, 140, .8) 50%, rgba(244, 162, 97, .55) 70%, transparent);
+            filter: blur(1.5px);
+            animation: fireLine 7s ease-in-out infinite;
+        }
+
+        /* Brasas CSS sobre el hero (funcionan aunque el canvas no se dibuje) */
+        .ember-field { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+        .ember {
+            position: absolute;
+            bottom: -12px;
+            width: 5px;
+            height: 5px;
+            border-radius: 9999px;
+            background: #ffb45e;
+            box-shadow: 0 0 9px 3px rgba(255, 140, 60, .5), 0 0 2px 1px rgba(255, 232, 190, .9);
+            opacity: 0;
+            animation: emberRise linear infinite;
+        }
+        @media (max-width: 640px) {
+            .ember:nth-child(n+9) { display: none; }
+        }
+
+        /* Llamas en la base del hero */
+        #hero-fire {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: max(0px, calc(100vh - 380px));
+            width: 100%;
+            height: 380px;
+            z-index: 1;
+            pointer-events: none;
+            -webkit-mask-image: linear-gradient(to bottom, #000 68%, rgba(0, 0, 0, .55) 86%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 68%, rgba(0, 0, 0, .55) 86%, transparent 100%);
+        }
+
+        /* Tarjetas con inclinación 3D */
+        .tilt-card { transition: transform .5s cubic-bezier(.22, 1, .36, 1); will-change: transform; }
+
+        /* Línea de los títulos: se dibuja al aparecer */
+        .reveal > .w-20 { transform: scaleX(0); transform-origin: center; transition: transform .9s cubic-bezier(.22, 1, .36, 1) .25s; }
+        .reveal.in > .w-20 { transform: scaleX(1); }
+
+        /* Quiz interactivo */
+        .quiz-option {
+            transition: transform .25s ease, border-color .25s ease, background-color .25s ease, box-shadow .25s ease;
+        }
+        .quiz-option:hover {
+            transform: translateY(-3px);
+            border-color: rgba(244, 162, 97, .55);
+            box-shadow: 0 12px 24px -14px rgba(0, 0, 0, .9);
+        }
+        .quiz-enter { animation: quizIn .45s cubic-bezier(.22, 1, .36, 1) both; }
+        @keyframes quizIn { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+
+        /* Ring de progreso del botón "volver arriba" */
+        #back-top-ring { transition: stroke-dashoffset .15s linear; }
+        #back-to-top svg { transform: rotate(-90deg); }
+
+        /* Accesibilidad: respeta reducción de movimiento */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .hero-anim { animation: none; opacity: 1; }
+            .hero-glow, .gradient-text, .marquee-track, .card-popular, .wa-pulse::before,
+            .hero-badge-img, .preloader-ring::after, .preloader-bar span, .cta-shimmer::after,
+            .quiz-enter, .animate-ping, #hero-fire-glow, #hero-fire-line { animation: none; }
+            .ember-field { display: none; }
+            .reveal { opacity: 1; translate: none; filter: none; transition: none; }
+            .reveal > .w-20 { transform: none; }
+            .tilt-card { transition: none; }
+        }
+    </style>
+    <noscript>
+        <style>
+            .hero-anim, .reveal { opacity: 1 !important; translate: none !important; filter: none !important; animation: none !important; }
+            #mobile-menu { max-height: none; opacity: 1; }
+        </style>
+    </noscript>
+</head>
+<body class="bg-kenpo-bg text-gray-200 font-sans antialiased selection:bg-kenpo-red selection:text-white flex flex-col min-h-screen">
+
+    <!-- PRELOADER -->
+    <div id="preloader" aria-hidden="true">
+        <div class="preloader-ring">
+            <img src="insignia.png" alt="" class="w-16 h-16 rounded-full object-contain bg-black p-1">
+        </div>
+        <span class="font-heading text-sm tracking-[0.4em] text-gray-400 uppercase ml-[0.4em]">Zumaeta Kenpo</span>
+        <div class="preloader-bar"><span></span></div>
+    </div>
+    <script>
+        (function () {
+            var p = document.getElementById('preloader');
+            if (!p) return;
+            var hide = function () { p.classList.add('done'); setTimeout(function () { p.remove(); }, 600); };
+            try {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || sessionStorage.getItem('zk-intro-seen')) {
+                    p.remove();
+                    return;
+                }
+                sessionStorage.setItem('zk-intro-seen', '1');
+            } catch (e) { /* sessionStorage bloqueado */ }
+            setTimeout(hide, 1100);
+            window.addEventListener('load', function () { setTimeout(hide, 350); });
+        })();
+    </script>
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-24 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/56932291414?text=Hola%20Profesor%20Zumaeta,%20vengo%20desde%20la%20p%C3%A1gina%20web%20y%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20las%20clases." 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp"
+       class="wa-pulse fixed bottom-5 left-5 z-40 w-14 h-14 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full flex items-center justify-center text-2xl shadow-lg shadow-emerald-900/40 transition-transform duration-300 hover:scale-110">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Back to top -->
+    <button id="back-to-top" aria-label="Volver arriba"
+            class="fixed bottom-5 right-5 z-40 w-11 h-11 rounded-full bg-kenpo-card border border-kenpo-cardBorder text-kenpo-orange hover:text-white hover:border-kenpo-orange hover:bg-kenpo-cardHover shadow-lg flex items-center justify-center text-sm cursor-pointer">
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="19" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="2"></circle>
+            <circle id="back-top-ring" cx="22" cy="22" r="19" fill="none" stroke="#f4a261" stroke-width="2" stroke-linecap="round" stroke-dasharray="119.38" stroke-dashoffset="119.38"></circle>
+        </svg>
+        <i class="fa-solid fa-arrow-up relative z-10"></i>
+    </button>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-40 bg-kenpo-bg/90 backdrop-blur-md border-b border-kenpo-cardBorder/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="nav-inner flex items-center justify-between h-20">
+                <!-- Logo & Brand Name -->
+                <a href="#inicio" class="flex items-center gap-3 group">
+                    <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden border border-kenpo-orange/40 p-0.5 group-hover:border-kenpo-orange transition-colors">
+                        <img src="insignia.png" 
+                             alt="Insignia Oficial Zumaeta Kenpo Studio" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/100x100/141418/f4a261?text=KENPO';" 
+                             class="w-full h-full object-contain rounded-full bg-black group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-heading text-xl sm:text-2xl font-bold tracking-wider text-white group-hover:text-kenpo-orange transition-colors uppercase leading-none">
+                            ZUMAETA
+                        </span>
+                        <span class="text-[10px] sm:text-xs text-kenpo-red tracking-[0.25em] uppercase font-bold mt-1">KENPO STUDIO</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8 font-medium text-xs lg:text-sm tracking-wider uppercase">
+                    <a href="#inicio" class="nav-link">Inicio</a>
+                    <a href="#filosofia" class="nav-link">Filosofía</a>
+                    <a href="#profesor" class="nav-link">Instructor</a>
+                    <a href="#programas" class="nav-link">Programas</a>
+                    <a href="#horarios" class="nav-link">Horarios</a>
+                    <a href="#contacto" class="nav-link">Contacto</a>
+                </div>
+
+                <!-- CTA Button Desktop -->
+                <div class="hidden md:flex items-center gap-3">
+                    <button onclick="openModal()" class="cta-shimmer relative group overflow-hidden rounded-xl p-px font-semibold text-xs tracking-wider uppercase cursor-pointer">
+                        <span class="absolute inset-0 bg-gradient-to-r from-kenpo-red via-kenpo-orange to-kenpo-red rounded-xl group-hover:opacity-90 transition-opacity"></span>
+                        <span class="relative z-10 block px-5 py-2.5 rounded-[11px] bg-kenpo-card transition-all duration-300 group-hover:bg-opacity-0 font-bold text-white">
+                            <i class="fa-solid fa-fire mr-1.5 text-kenpo-orange group-hover:text-white transition-colors"></i> Clase Gratis
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu" class="text-gray-300 hover:text-white focus:outline-none p-2 rounded-lg bg-kenpo-card border border-kenpo-cardBorder transition-colors hover:border-kenpo-orange/50">
+                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="md:hidden bg-kenpo-card/95 backdrop-blur-xl border-b border-kenpo-cardBorder space-y-1">
+            <a href="#inicio" onclick="toggleMobileMenu(false)" class="block py-3 text-sm font-semibold text-gray-200 hover:text-kenpo-orange border-b border-kenpo-cardBorder transition-colors">INICIO</a>
+            <a href="#filosofia" onclick="toggleMobileMenu(false)" class="block py-3 text-sm font-semibold text-gray-200 hover:text-kenpo-orange border-b border-kenpo-cardBorder transition-colors">FILOSOFÍA</a>
+            <a href="#profesor" onclick="toggleMobileMenu(false)" class="block py-3 text-sm font-semibold text-gray-200 hover:text-kenpo-orange border-b border-kenpo-cardBorder transition-colors">INSTRUCTOR</a>
+            <a href="#programas" onclick="toggleMobileMenu(false)" class="block py-3 text-sm font-semibold text-gray-200 hover:text-kenpo-orange border-b border-kenpo-cardBorder transition-colors">PROGRAMAS</a>
+            <a href="#horarios" onclick="toggleMobileMenu(false)" class="block py-3 text-sm font-semibold text-gray-200 hover:text-kenpo-orange border-b border-kenpo-cardBorder transition-colors">HORARIOS</a>
+            <a href="#contacto" onclick="toggleMobileMenu(false)" class="block py-3 text-sm font-semibold text-gray-200 hover:text-kenpo-orange border-b border-kenpo-cardBorder transition-colors">CONTACTO</a>
+            <button onclick="toggleMobileMenu(false); openModal();" class="w-full mt-4 bg-gradient-to-r from-kenpo-red to-kenpo-redHover text-white font-bold py-3 px-4 rounded-xl uppercase text-xs tracking-wider shadow-lg">
+                Agendar Clase Gratis
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative min-h-screen pt-32 pb-20 flex items-center justify-center hero-bg overflow-hidden">
+        <div id="hero-spotlight" aria-hidden="true"></div>
+        <canvas id="hero-particles" class="absolute inset-0 z-[1] w-full h-full pointer-events-none opacity-90" aria-hidden="true"></canvas>
+        <span class="kanji-watermark hidden lg:block" style="right: 2.5rem; top: 20%; font-size: 14rem; writing-mode: vertical-rl;" aria-hidden="true">拳法</span>
+
+        <!-- Ambient Glows -->
+        <div class="hero-glow absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-kenpo-red/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="hero-glow absolute bottom-10 right-10 w-[300px] h-[300px] bg-kenpo-orange/10 rounded-full blur-[100px] pointer-events-none" style="animation-delay: 2s;"></div>
+        <div id="hero-fire-glow" aria-hidden="true"></div>
+        <div id="hero-fire-line" aria-hidden="true"></div>
+        <div class="ember-field" aria-hidden="true">
+            <span class="ember" style="left: 3%; animation-duration: 11s; animation-delay: -2s; --drift: 22px;"></span>
+            <span class="ember" style="left: 10%; width: 3px; height: 3px; animation-duration: 13s; animation-delay: -6s; --drift: -14px;"></span>
+            <span class="ember" style="left: 17%; width: 4px; height: 4px; animation-duration: 9.5s; animation-delay: -1s; --drift: 18px;"></span>
+            <span class="ember" style="left: 25%; width: 6px; height: 6px; animation-duration: 14s; animation-delay: -9s; --drift: -24px;"></span>
+            <span class="ember" style="left: 32%; width: 3px; height: 3px; animation-duration: 12s; animation-delay: -4s; --drift: 12px;"></span>
+            <span class="ember" style="left: 40%; animation-duration: 10s; animation-delay: -7.5s; --drift: -18px;"></span>
+            <span class="ember" style="left: 48%; width: 4px; height: 4px; animation-duration: 15s; animation-delay: -3s; --drift: 26px;"></span>
+            <span class="ember" style="left: 55%; width: 6px; height: 6px; animation-duration: 11.5s; animation-delay: -11s; --drift: -20px;"></span>
+            <span class="ember" style="left: 62%; width: 3px; height: 3px; animation-duration: 13.5s; animation-delay: -5s; --drift: 16px;"></span>
+            <span class="ember" style="left: 69%; animation-duration: 10.5s; animation-delay: -8s; --drift: -22px;"></span>
+            <span class="ember" style="left: 76%; width: 4px; height: 4px; animation-duration: 12.5s; animation-delay: -2.5s; --drift: 20px;"></span>
+            <span class="ember" style="left: 83%; width: 6px; height: 6px; animation-duration: 14.5s; animation-delay: -10s; --drift: -26px;"></span>
+            <span class="ember" style="left: 90%; width: 3px; height: 3px; animation-duration: 9s; animation-delay: -6.5s; --drift: 14px;"></span>
+            <span class="ember" style="left: 96%; animation-duration: 12s; animation-delay: -4.5s; --drift: -12px;"></span>
+        </div>
+        <canvas id="hero-fire" aria-hidden="true"></canvas>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <!-- Emblem Badge -->
+            <div class="hero-anim inline-flex items-center gap-3 bg-kenpo-card/90 backdrop-blur-md px-5 py-2 rounded-full border border-kenpo-orange/30 mb-8 shadow-glow-orange" style="animation-delay: .05s;">
+                <img src="insignia.png" 
+                     alt="Emblema Kenpo Studio" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/50x50/141418/f4a261?text=K';" 
+                     class="hero-badge-img w-6 h-6 rounded-full">
+                <span class="text-xs sm:text-sm font-semibold tracking-widest text-kenpo-orange uppercase">Equilibrio • Fuerza • Sabiduría</span>
+            </div>
+
+            <h1 class="hero-anim font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white uppercase mb-6 leading-none" style="animation-delay: .18s;">
+                Domina la Mente y el Cuerpo con <br class="hidden sm:inline">
+                <span class="gradient-text">ZUMAETA KENPO STUDIO</span>
+            </h1>
+
+            <p class="hero-anim max-w-2xl mx-auto text-base sm:text-lg text-gray-300 mb-10 leading-relaxed font-light" style="animation-delay: .3s;">
+                Aprende la ciencia del movimiento y la defensa personal moderna. Desarrolla disciplina, velocidad y poder marcial bajo el equilibrio fundamental del <strong class="text-white font-semibold">Tigre</strong> y el <strong class="text-white font-semibold">Dragón</strong>.
+            </p>
+
+            <div class="hero-anim flex flex-col sm:flex-row gap-4 justify-center items-center" style="animation-delay: .42s;">
+                <button onclick="openModal()" class="w-full sm:w-auto bg-gradient-to-r from-kenpo-red via-red-600 to-kenpo-redHover hover:from-red-600 hover:to-kenpo-red text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-glow-red uppercase tracking-wider text-sm flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-calendar-check text-base"></i> Agenda tu Clase Gratis
+                </button>
+                <a href="#programas" class="w-full sm:w-auto bg-kenpo-card/80 hover:bg-kenpo-cardBorder text-gray-200 border border-kenpo-cardBorder hover:border-kenpo-orange/50 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 uppercase tracking-wider text-sm text-center backdrop-blur-md">
+                    Ver Programas
+                </a>
+            </div>
+
+            <!-- Próxima clase -->
+            <div class="hero-anim mt-6 max-w-2xl mx-auto" style="animation-delay: .5s;">
+                <div class="glass-panel rounded-2xl border border-kenpo-cardBorder/80 px-4 py-3 flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
+                    <span class="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                    </span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-[10px] uppercase tracking-[0.22em] text-emerald-400 font-bold">Próxima clase</p>
+                        <p class="text-sm font-semibold text-white truncate"><span id="next-class-name">Calculando…</span></p>
+                    </div>
+                    <div class="text-xs text-gray-300 whitespace-nowrap">
+                        <i class="fa-regular fa-clock text-kenpo-orange mr-1"></i><span id="next-class-when">—</span>
+                        <span class="text-gray-500 mx-1">·</span>
+                        <span id="next-class-countdown" class="text-kenpo-orange font-semibold">—</span>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button onclick="bookNextClass()" class="bg-gradient-to-r from-kenpo-red to-kenpo-redHover hover:from-red-600 hover:to-kenpo-red text-white font-bold px-3.5 py-2 rounded-lg text-[10px] uppercase tracking-wider transition-all shadow-md cursor-pointer">
+                            Reservar cupo
+                        </button>
+                        <button onclick="downloadNextClassIcs()" aria-label="Añadir la próxima clase a mi calendario" title="Añadir al calendario" class="w-9 h-9 rounded-lg border border-kenpo-cardBorder text-kenpo-orange hover:text-white hover:border-kenpo-orange transition-colors flex items-center justify-center cursor-pointer">
+                            <i class="fa-regular fa-calendar-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="hero-anim grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mt-10 pt-10 border-t border-kenpo-cardBorder/60 max-w-5xl mx-auto" style="animation-delay: .62s;">
+                <div class="glass-panel p-5 rounded-2xl border border-kenpo-cardBorder hover:border-kenpo-orange/40 hover:-translate-y-1 transition-all group">
+                    <div class="text-3xl sm:text-4xl font-heading font-bold text-kenpo-orange group-hover:scale-105 transition-transform"><span data-count="100" data-suffix="%">100%</span></div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium">Defensa Efectiva</div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-kenpo-cardBorder hover:border-kenpo-red/40 hover:-translate-y-1 transition-all group">
+                    <div class="text-3xl sm:text-4xl font-heading font-bold text-kenpo-red group-hover:scale-105 transition-transform"><span data-count="3" data-prefix="+" data-suffix=" Años">+3 Años</span></div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium">Todas las Edades</div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-kenpo-cardBorder hover:border-kenpo-gold/40 hover:-translate-y-1 transition-all group">
+                    <div class="text-3xl sm:text-4xl font-heading font-bold text-kenpo-goldLight group-hover:scale-105 transition-transform">Sensei</div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium">Certificado Internacional</div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-kenpo-cardBorder hover:border-kenpo-orange/40 hover:-translate-y-1 transition-all group">
+                    <div class="text-3xl sm:text-4xl font-heading font-bold text-kenpo-orange group-hover:scale-105 transition-transform">Ambiente</div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium">Familiar & Seguro</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee relative border-y border-kenpo-cardBorder bg-kenpo-card/40 py-4 sm:py-5 overflow-hidden select-none" aria-hidden="true">
+        <div class="marquee-track items-center">
+            <div class="flex items-center gap-10 pr-10">
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Disciplina <i class="fa-solid fa-star text-kenpo-red text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Respeto <i class="fa-solid fa-star text-kenpo-orange text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Defensa Personal <i class="fa-solid fa-star text-kenpo-goldLight text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Confianza <i class="fa-solid fa-star text-kenpo-red text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Tradición <i class="fa-solid fa-star text-kenpo-orange text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Fuerza <i class="fa-solid fa-star text-kenpo-goldLight text-[10px] align-middle ml-10"></i></span>
+            </div>
+            <div class="flex items-center gap-10 pr-10">
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Disciplina <i class="fa-solid fa-star text-kenpo-red text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Respeto <i class="fa-solid fa-star text-kenpo-orange text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Defensa Personal <i class="fa-solid fa-star text-kenpo-goldLight text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Confianza <i class="fa-solid fa-star text-kenpo-red text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Tradición <i class="fa-solid fa-star text-kenpo-orange text-[10px] align-middle ml-10"></i></span>
+                <span class="font-heading text-base sm:text-2xl uppercase tracking-[0.25em] text-gray-400 whitespace-nowrap">Fuerza <i class="fa-solid fa-star text-kenpo-goldLight text-[10px] align-middle ml-10"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILOSOFÍA Y SIMBOLOGÍA -->
+    <section id="filosofia" class="py-24 bg-kenpo-bg relative border-t border-kenpo-cardBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-kenpo-orange font-semibold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2">Simbología & Tradición</h2>
+                <h3 class="font-heading text-3xl sm:text-5xl font-bold text-white uppercase tracking-tight">El Significado de Nuestra Insignia</h3>
+                <div class="w-20 h-1 bg-gradient-to-r from-kenpo-red to-kenpo-orange mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- El Tigre -->
+                <div class="bg-kenpo-card p-8 rounded-3xl border border-kenpo-cardBorder hover:border-kenpo-red transition-all duration-300 shadow-card-hover group hover:-translate-y-1.5">
+                    <div class="w-14 h-14 bg-kenpo-red/10 rounded-2xl flex items-center justify-center text-kenpo-red text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-paw"></i>
+                    </div>
+                    <h4 class="font-heading text-2xl font-bold text-white mb-3 uppercase tracking-wide">El Tigre (Fuerza & Potencia)</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed font-light">
+                        Representa el impulso físico, la velocidad penetrante y la fuerza devastadora. En el Kenpo Karate, el tigre simboliza el dominio técnico inicial, la agilidad en el combate de corta distancia y el poder físico canalizado con dirección.
+                    </p>
+                </div>
+
+                <!-- Center Insignia Spotlight -->
+                <div class="flex flex-col items-center justify-center text-center p-8 bg-kenpo-card/40 rounded-3xl border border-kenpo-cardBorder relative my-4 lg:my-0 shadow-glow-orange">
+                    <div class="relative group cursor-pointer" data-lightbox="insignia.png" data-lightbox-caption="Insignia oficial · Zumaeta Kenpo Studio" role="button" tabindex="0" aria-label="Ampliar la insignia del estudio">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-kenpo-orange via-kenpo-red to-kenpo-gold rounded-full blur-xl opacity-40 group-hover:opacity-100 transition duration-500"></div>
+                        <img src="insignia.png" 
+                             alt="Escudo Zumaeta Kenpo Studio Tigre y Dragón" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/300x300/141418/f4a261?text=ZUMAETA+KENPO';" 
+                             class="relative w-60 h-60 sm:w-72 sm:h-72 object-contain rounded-full bg-black p-3 border-2 border-kenpo-orange/60 shadow-2xl">
+                    </div>
+                    <h4 class="font-heading text-xl font-bold text-white mt-6 uppercase tracking-wider">Reloj de Kenpo & La K</h4>
+                    <p class="text-xs text-gray-400 mt-2 max-w-xs leading-relaxed">
+                        Las direcciones de ataque y defensa representadas de forma numérica circular. La matriz de movimientos del arte marcial perfecto.
+                    </p>
+                </div>
+
+                <!-- El Dragón -->
+                <div class="bg-kenpo-card p-8 rounded-3xl border border-kenpo-cardBorder hover:border-kenpo-orange transition-all duration-300 shadow-card-hover group hover:-translate-y-1.5">
+                    <div class="w-14 h-14 bg-kenpo-orange/10 rounded-2xl flex items-center justify-center text-kenpo-orange text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-dragon"></i>
+                    </div>
+                    <h4 class="font-heading text-2xl font-bold text-white mb-3 uppercase tracking-wide">El Dragón (Sabiduría & Fluidez)</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed font-light">
+                        Representa el desarrollo espiritual, el control mental y la adaptación estratégica. El dragón es suave pero invencible, adaptable como el agua y enfocado en la resolución pacífica antes del conflicto.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFESOR / INSTRUCTOR -->
+    <section id="profesor" class="py-24 bg-gradient-to-b from-kenpo-bg via-kenpo-card/30 to-kenpo-bg border-t border-kenpo-cardBorder relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-kenpo-orange font-semibold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2">Liderazgo & Experiencia</h2>
+                <h3 class="font-heading text-3xl sm:text-5xl font-bold text-white uppercase tracking-tight">Nuestro Profesor Principal</h3>
+                <div class="w-20 h-1 bg-gradient-to-r from-kenpo-red to-kenpo-orange mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Foto del Profesor -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -inset-2 bg-gradient-to-tr from-kenpo-red via-kenpo-orange to-transparent rounded-3xl blur-2xl opacity-30"></div>
+                        
+                        <div class="relative overflow-hidden rounded-3xl border border-kenpo-cardBorder bg-[#141418] shadow-2xl flex items-center justify-center cursor-zoom-in" data-lightbox="profesor-zumaeta.png" data-lightbox-caption="Profesor Rodrigo Zumaeta · Cinturón Negro de Kenpo Karate" role="button" tabindex="0" aria-label="Ampliar foto del profesor Zumaeta">
+                            <img src="profesor-zumaeta.png" 
+                                 alt="Profesor Rodrigo Zumaeta - Cinturón Negro de Kenpo Karate" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=800';" 
+                                 class="w-full h-[480px] sm:h-[540px] object-cover object-top hover:scale-105 transition-transform duration-700"
+                                 style="image-rendering: -webkit-optimize-contrast; filter: contrast(1.06) brightness(1.02);">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#141418] via-transparent to-transparent opacity-80 pointer-events-none"></div>
+
+                            <div class="absolute bottom-4 left-4 right-4 bg-kenpo-bg/90 backdrop-blur-md p-4 rounded-2xl border border-kenpo-cardBorder shadow-lg z-10">
+                                <span class="bg-gradient-to-r from-kenpo-red to-kenpo-redHover text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-1">
+                                    Sensei / Head Instructor
+                                </span>
+                                <h4 class="font-heading text-xl font-bold text-white uppercase leading-tight">Profesor Zumaeta</h4>
+                                <p class="text-xs text-kenpo-orange font-semibold mt-0.5"><i class="fa-solid fa-ribbon mr-1"></i> 1st Degree Black Belt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trayectoria -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <h4 class="text-2xl sm:text-3xl font-heading font-bold text-white uppercase tracking-wider">
+                            Pasión, Disciplina y Maestría en Kenpo
+                        </h4>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mt-4 font-light">
+                            Con más de 15 años dedicado al estudio, práctica y enseñanza del Kenpo Karate, el <strong class="text-kenpo-orange font-semibold">Profesor Zumaeta</strong> ha formado a cientos de estudiantes, guiándolos desde sus primeros pasos hasta alcanzar el desarrollo físico y mental necesario para la defensa personal y la vida cotidiana.
+                        </p>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-3 font-light">
+                            Su enfoque de enseñanza combina la rigurosidad y tradición marcial del Kenpo con métodos modernos de preparación física, biomecánica aplicada al combate y el desarrollo valórico en niños y adultos.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="bg-kenpo-card p-4 rounded-2xl border border-kenpo-cardBorder flex items-start gap-3 hover:border-kenpo-orange/40 transition-colors">
+                            <div class="w-10 h-10 bg-kenpo-red/10 text-kenpo-red rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Certificación Internacional</h5>
+                                <p class="text-xs text-gray-400 mt-1 leading-snug">Grado homologado por organismos internacionales de Kenpo Karate.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-kenpo-card p-4 rounded-2xl border border-kenpo-cardBorder flex items-start gap-3 hover:border-kenpo-orange/40 transition-colors">
+                            <div class="w-10 h-10 bg-kenpo-orange/10 text-kenpo-orange rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Especialista en Defensa</h5>
+                                <p class="text-xs text-gray-400 mt-1 leading-snug">Instructor en tácticas defensivas urbanas y escenarios de riesgo.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-kenpo-card p-4 rounded-2xl border border-kenpo-cardBorder flex items-start gap-3 hover:border-kenpo-orange/40 transition-colors">
+                            <div class="w-10 h-10 bg-kenpo-gold/10 text-kenpo-goldLight rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-children"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Pedagogía Infantil</h5>
+                                <p class="text-xs text-gray-400 mt-1 leading-snug">Formación en desarrollo psicomotriz y prevención del acoso escolar.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-kenpo-card p-4 rounded-2xl border border-kenpo-cardBorder flex items-start gap-3 hover:border-kenpo-orange/40 transition-colors">
+                            <div class="w-10 h-10 bg-red-500/10 text-red-400 rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Trayectoria Competitiva</h5>
+                                <p class="text-xs text-gray-400 mt-1 leading-snug">Reconocida experiencia en torneos nacionales e internacionales.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-kenpo-card/90 p-5 rounded-2xl border-l-4 border-kenpo-red text-xs sm:text-sm text-gray-300 italic shadow-md">
+                        "El objetivo del Kenpo no es pelear, sino desarrollar el autocontrol y la confianza para nunca tener que hacerlo. Formamos personas fuertes de cuerpo y de mente."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAMAS Y CLASES -->
+    <section id="programas" class="py-24 bg-kenpo-bg border-t border-kenpo-cardBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-kenpo-orange font-semibold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2">Formación Integral</h2>
+                <h3 class="font-heading text-3xl sm:text-5xl font-bold text-white uppercase tracking-tight">Programas de Entrenamiento</h3>
+                <p class="text-gray-400 text-sm mt-3 font-light">Diseñados para cada etapa del desarrollo físico, mental y marcial.</p>
+                <div class="w-20 h-1 bg-gradient-to-r from-kenpo-red to-kenpo-orange mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Programa 1: Niños -->
+                <div class="bg-kenpo-card rounded-3xl overflow-hidden border border-kenpo-cardBorder hover:border-kenpo-orange transition-all duration-300 flex flex-col group shadow-card-hover hover:-translate-y-1.5">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=800" 
+                             alt="Clases de Kenpo Infantil para niños en Santiago" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-kenpo-card via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4 bg-kenpo-orange text-black font-extrabold text-xs uppercase px-3.5 py-1.5 rounded-full tracking-wider shadow-md">
+                            3 a 12 Años
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-heading text-2xl font-bold text-white mb-3 uppercase tracking-wide">Kenpo Infantil (Dragones & Tigres)</h4>
+                            <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light">
+                                Enfoque en la disciplina, coordinación motriz, anti-bullying y respeto. Ayudamos a desarrollar la confianza en sí mismos mediante la diversión y la práctica estructurada.
+                            </p>
+                            <ul class="space-y-2.5 mb-8 text-xs text-gray-300">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-orange text-sm"></i> Desarrollo de psicomotricidad</li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-orange text-sm"></i> Fomento del respeto y escucha activa</li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-orange text-sm"></i> Técnicas anti-bullying verbal y físico</li>
+                            </ul>
+                        </div>
+                        <button onclick="openModal('Kenpo Infantil')" class="w-full py-3.5 bg-kenpo-bg hover:bg-kenpo-orange hover:text-black text-kenpo-orange font-bold text-xs uppercase tracking-wider rounded-xl border border-kenpo-orange/40 transition-colors shadow-md cursor-pointer">
+                            Reservar Clase Infantil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Programa 2: Adultos -->
+                <div class="bg-kenpo-card rounded-3xl overflow-hidden border-2 border-kenpo-red transition-all duration-300 flex flex-col group shadow-glow-red hover:-translate-y-2 relative">
+                    <div class="absolute top-0 right-0 bg-kenpo-red text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-bl-xl z-20">
+                        Popular
+                    </div>
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=800" 
+                             alt="Entrenamiento de Kenpo Adultos y Jóvenes" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-kenpo-card via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4 bg-kenpo-red text-white font-extrabold text-xs uppercase px-3.5 py-1.5 rounded-full tracking-wider shadow-md">
+                            Todos los Niveles
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-heading text-2xl font-bold text-white mb-3 uppercase tracking-wide">Kenpo Adultos & Jóvenes</h4>
+                            <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light">
+                                Sistema defensivo basado en principios biomecánicos, combinaciones rápidas de golpes y acondicionamiento físico integral de alto rendimiento.
+                            </p>
+                            <ul class="space-y-2.5 mb-8 text-xs text-gray-300">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-red text-sm"></i> Defensa personal rápida y reactiva</li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-red text-sm"></i> Acondicionamiento físico completo</li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-red text-sm"></i> Manejo del estrés y concentración</li>
+                            </ul>
+                        </div>
+                        <button onclick="openModal('Kenpo Adultos')" class="w-full py-3.5 bg-gradient-to-r from-kenpo-red to-kenpo-redHover hover:from-red-600 hover:to-kenpo-red text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer">
+                            Reservar Clase Adultos
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Programa 3: Defensa Personal -->
+                <div class="bg-kenpo-card rounded-3xl overflow-hidden border border-kenpo-cardBorder hover:border-kenpo-goldLight transition-all duration-300 flex flex-col group shadow-card-hover hover:-translate-y-1.5">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=800" 
+                             alt="Defensa Personal Urbana y Combate Táctico" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-kenpo-card via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4 bg-kenpo-gold text-white font-extrabold text-xs uppercase px-3.5 py-1.5 rounded-full tracking-wider shadow-md">
+                            Avanzado & Combate
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-heading text-2xl font-bold text-white mb-3 uppercase tracking-wide">Defensa Personal & Combate</h4>
+                            <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light">
+                                Entrenamiento táctico para situaciones reales de riesgo: agarres, defensas contra desarmes, combate controlado y trabajo bajo presión.
+                            </p>
+                            <ul class="space-y-2.5 mb-8 text-xs text-gray-300">
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-goldLight text-sm"></i> Escenarios realistas de autodefensa</li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-goldLight text-sm"></i> Sparring continuo y controlado</li>
+                                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-kenpo-goldLight text-sm"></i> Manejo de distancia y tiempo</li>
+                            </ul>
+                        </div>
+                        <button onclick="openModal('Defensa Personal')" class="w-full py-3.5 bg-kenpo-bg hover:bg-kenpo-goldLight hover:text-black text-kenpo-goldLight font-bold text-xs uppercase tracking-wider rounded-xl border border-kenpo-goldLight/40 transition-colors shadow-md cursor-pointer">
+                            Consultar Nivel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUIZ: ENCUENTRA TU CAMINO -->
+            <div id="camino" class="mt-16 relative overflow-hidden rounded-3xl border border-kenpo-cardBorder bg-gradient-to-br from-kenpo-card/80 via-kenpo-bg to-kenpo-card/60 p-6 sm:p-10">
+                <span class="kanji-watermark absolute -top-8 right-2 text-[10rem] sm:text-[16rem]" aria-hidden="true">道</span>
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-4">
+                        <h2 class="text-kenpo-orange font-semibold tracking-[0.2em] uppercase text-xs mb-2">¿No sabes por dónde empezar?</h2>
+                        <h3 class="font-heading text-2xl sm:text-3xl font-bold text-white uppercase tracking-tight">Encuentra tu camino en 3 preguntas</h3>
+                        <p class="text-gray-400 text-sm mt-3 font-light leading-relaxed">
+                            Cuéntanos con quién vienes, qué buscas y cuánta experiencia tienes. Te recomendamos el programa ideal y puedes reservar tu clase de prueba al instante.
+                        </p>
+                        <p class="text-[11px] text-gray-500 mt-4"><i class="fa-solid fa-wand-magic-sparkles text-kenpo-orange mr-1.5"></i> Sin registros. 20 segundos.</p>
+                    </div>
+                    <div class="lg:col-span-8">
+                        <div class="bg-kenpo-bg/80 backdrop-blur-sm border border-kenpo-cardBorder rounded-2xl p-5 sm:p-6">
+                            <div class="flex gap-1.5 mb-5" id="quiz-progress" aria-hidden="true">
+                                <span class="h-1 flex-1 rounded-full bg-kenpo-cardBorder transition-colors"></span>
+                                <span class="h-1 flex-1 rounded-full bg-kenpo-cardBorder transition-colors"></span>
+                                <span class="h-1 flex-1 rounded-full bg-kenpo-cardBorder transition-colors"></span>
+                            </div>
+                            <div id="quiz-body" aria-live="polite" class="min-h-[190px]"></div>
+                            <div id="quiz-bottom" class="flex items-center justify-between mt-5 gap-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HORARIOS Y FAQ -->
+    <section id="horarios" class="py-24 bg-gradient-to-b from-kenpo-bg to-kenpo-card/40 border-t border-kenpo-cardBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-kenpo-orange font-semibold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2">Organiza Tu Semana</h2>
+                <h3 class="font-heading text-3xl sm:text-5xl font-bold text-white uppercase tracking-tight">Horarios de Clases</h3>
+                <div class="w-20 h-1 bg-gradient-to-r from-kenpo-red to-kenpo-orange mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Schedule Table -->
+            <div class="overflow-x-auto bg-kenpo-card rounded-3xl border border-kenpo-cardBorder p-4 sm:p-6 mb-16 shadow-2xl">
+                <table id="schedule-table" class="w-full text-left text-sm text-gray-300 min-w-[650px]">
+                    <thead class="bg-black/60 text-xs uppercase font-heading tracking-wider text-kenpo-orange">
+                        <tr>
+                            <th class="py-4 px-6 rounded-l-2xl">Horario</th>
+                            <th class="py-4 px-6">Lunes y Miércoles</th>
+                            <th class="py-4 px-6">Martes y Jueves</th>
+                            <th class="py-4 px-6 rounded-r-2xl">Sábados</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-kenpo-cardBorder/60">
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="py-5 px-6 font-bold text-white flex items-center gap-2">
+                                <i class="fa-regular fa-clock text-kenpo-orange"></i> 16:30 - 17:30
+                            </td>
+                            <td data-label="Lun / Mié" class="py-5 px-6"><span class="bg-kenpo-orange/15 text-kenpo-orange border border-kenpo-orange/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Kenpo Infantil (3-6 Años)</span></td>
+                            <td data-label="Mar / Jue" class="py-5 px-6"><span class="bg-kenpo-orange/15 text-kenpo-orange border border-kenpo-orange/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Kenpo Infantil (7-12 Años)</span></td>
+                            <td data-label="Sábado" class="py-5 px-6"><span class="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Entrenamiento Libre</span></td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="py-5 px-6 font-bold text-white flex items-center gap-2">
+                                <i class="fa-regular fa-clock text-kenpo-red"></i> 18:00 - 19:15
+                            </td>
+                            <td data-label="Lun / Mié" class="py-5 px-6"><span class="bg-kenpo-red/15 text-kenpo-red border border-kenpo-red/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Kenpo Adultos (Principiantes)</span></td>
+                            <td data-label="Mar / Jue" class="py-5 px-6"><span class="bg-kenpo-red/15 text-kenpo-red border border-kenpo-red/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Técnicas Defensa Personal</span></td>
+                            <td data-label="Sábado" class="py-5 px-6"><span class="bg-kenpo-orange/15 text-kenpo-orange border border-kenpo-orange/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Kenpo Mixto (10:00 AM)</span></td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="py-5 px-6 font-bold text-white flex items-center gap-2">
+                                <i class="fa-regular fa-clock text-kenpo-goldLight"></i> 19:30 - 21:00
+                            </td>
+                            <td data-label="Lun / Mié" class="py-5 px-6"><span class="bg-kenpo-red/15 text-kenpo-red border border-kenpo-red/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Kenpo Adultos (Avanzado)</span></td>
+                            <td data-label="Mar / Jue" class="py-5 px-6"><span class="bg-purple-500/15 text-purple-400 border border-purple-500/30 px-3 py-1.5 rounded-xl text-xs font-semibold inline-block">Combate & Sparring Táctico</span></td>
+                            <td data-label="Sábado" class="py-5 px-6 text-gray-500 text-xs italic">Consultar Seminarios</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="max-w-3xl mx-auto">
+                <h4 class="font-heading text-2xl sm:text-3xl font-bold text-white uppercase text-center mb-8 tracking-wide">Preguntas Frecuentes</h4>
+                <div class="space-y-4">
+                    <div class="faq-item bg-kenpo-card rounded-2xl border border-kenpo-cardBorder overflow-hidden transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-semibold text-white flex justify-between items-center focus:outline-none hover:text-kenpo-orange transition-colors cursor-pointer">
+                            <span>¿Necesito experiencia previa para comenzar?</span>
+                            <i class="fa-solid fa-chevron-down text-kenpo-orange transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content text-sm text-gray-400 leading-relaxed font-light">
+                            No, nuestras clases de Kenpo están estructuradas para recibir a estudiantes completamente desde cero. Los instructores adaptan la intensidad a tu nivel físico y ritmo de aprendizaje.
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-kenpo-card rounded-2xl border border-kenpo-cardBorder overflow-hidden transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-semibold text-white flex justify-between items-center focus:outline-none hover:text-kenpo-orange transition-colors cursor-pointer">
+                            <span>¿Qué indumentaria debo llevar a la clase de prueba?</span>
+                            <i class="fa-solid fa-chevron-down text-kenpo-orange transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content text-sm text-gray-400 leading-relaxed font-light">
+                            Solo necesitas ropa deportiva cómoda (pantalón de buzo, polera) y una botella con agua. Una vez formalizada la inscripción, te orientaremos con el uniforme oficial (Gi) y las insignias del estudio.
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-kenpo-card rounded-2xl border border-kenpo-cardBorder overflow-hidden transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-semibold text-white flex justify-between items-center focus:outline-none hover:text-kenpo-orange transition-colors cursor-pointer">
+                            <span>¿Desde qué edad pueden ingresar los niños?</span>
+                            <i class="fa-solid fa-chevron-down text-kenpo-orange transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content text-sm text-gray-400 leading-relaxed font-light">
+                            Aceptamos niños a partir de los 3 a 4 años en el grupo infantil inicial, donde nos enfocamos en motricidad, atención, disciplina básica y juego estructurado.
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-kenpo-card rounded-2xl border border-kenpo-cardBorder overflow-hidden transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-semibold text-white flex justify-between items-center focus:outline-none hover:text-kenpo-orange transition-colors cursor-pointer">
+                            <span>¿Cómo funciona la clase gratis de prueba?</span>
+                            <i class="fa-solid fa-chevron-down text-kenpo-orange transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content text-sm text-gray-400 leading-relaxed font-light">
+                            Agendas tu cupo mediante el formulario web o por WhatsApp. Te esperamos en el horario acordado para que participes activamente de la sesión de 60 minutos sin compromiso comercial.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO Y UBICACIÓN -->
+    <section id="contacto" class="py-24 bg-gradient-to-t from-black via-kenpo-bg to-kenpo-bg border-t border-kenpo-cardBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Info & Form -->
+                <div>
+                    <h2 class="text-kenpo-orange font-semibold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2">Ponte en Contacto</h2>
+                    <h3 class="font-heading text-3xl sm:text-4xl font-bold text-white uppercase mb-6 tracking-wide">Visítanos o Envíanos un Mensaje</h3>
+                    <p class="text-gray-400 text-sm mb-8 leading-relaxed font-light">
+                        Estamos listos para guiarte en tu camino marcial. Ven a conocer nuestras instalaciones y conversar directamente con nuestros instructores.
+                    </p>
+
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-11 h-11 bg-kenpo-red/10 text-kenpo-red rounded-xl flex items-center justify-center shrink-0 border border-kenpo-red/20 text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-semibold text-sm">Ubicación del Studio</h5>
+                                <p class="text-gray-400 text-xs mt-0.5">Av. Principal Marcial #1234, Santiago, Chile</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-11 h-11 bg-kenpo-orange/10 text-kenpo-orange rounded-xl flex items-center justify-center shrink-0 border border-kenpo-orange/20 text-lg">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-semibold text-sm">Teléfono / WhatsApp</h5>
+                                <p class="text-gray-400 text-xs mt-0.5">+56 9 3229 1414</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-11 h-11 bg-kenpo-gold/10 text-kenpo-goldLight rounded-xl flex items-center justify-center shrink-0 border border-kenpo-gold/20 text-lg">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-semibold text-sm">Correo Electrónico</h5>
+                                <p class="text-gray-400 text-xs mt-0.5">contacto@zumaetakenpo.cl</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Direct Contact Form (Redirects to WhatsApp) -->
+                    <form onsubmit="handleContactWhatsApp(event)" class="space-y-4 bg-kenpo-card p-6 rounded-3xl border border-kenpo-cardBorder shadow-xl">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input type="text" id="contact-name" name="nombre" placeholder="Tu Nombre *" required class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors">
+                            <input type="tel" id="contact-phone" name="telefono" placeholder="Tu Teléfono *" required class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors">
+                        </div>
+                        <textarea id="contact-message" name="mensaje" rows="3" placeholder="¿En qué programa estás interesado/a o qué dudas tienes? *" required class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors resize-none"></textarea>
+                        <button type="submit" class="w-full bg-gradient-to-r from-kenpo-red to-kenpo-redHover hover:from-red-600 hover:to-kenpo-red text-white font-bold py-3.5 px-6 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Enviar Consulta por WhatsApp
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Google Maps Embed Card -->
+                <div class="bg-kenpo-card rounded-3xl p-4 border border-kenpo-cardBorder flex flex-col h-full min-h-[400px] shadow-2xl">
+                    <div class="flex items-center justify-between mb-4 px-3 pt-2">
+                        <div class="flex items-center gap-3">
+                            <img src="insignia.png" 
+                                 alt="Zumaeta Kenpo Studio Mapa" 
+                                 onerror="this.onerror=null; this.src='https://placehold.co/40x40/141418/f4a261?text=K';" 
+                                 class="w-8 h-8 rounded-full">
+                            <span class="text-white font-heading font-bold uppercase text-sm tracking-wider">Ubicación del Studio</span>
+                        </div>
+                        <span id="studio-status" class="text-xs text-emerald-400 font-semibold"><i id="studio-status-dot" class="fa-solid fa-circle text-[8px] text-emerald-500 mr-1"></i><span id="studio-status-text">Abierto ahora</span></span>
+                    </div>
+                    <div class="w-full flex-1 rounded-2xl overflow-hidden relative bg-black/40 border border-kenpo-cardBorder">
+                        <iframe 
+                            title="Mapa de ubicación Zumaeta Kenpo Studio"
+                            class="w-full h-full min-h-[340px] border-0 grayscale opacity-80 hover:grayscale-0 transition-all duration-500" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106518.730248434!2d-70.64827!3d-33.45694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9692c6c5da032ea7%3A0x2db2534f378a5e36!2sSantiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1680000000000!5m2!1ses!2scl" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-12 border-t border-kenpo-cardBorder/80 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <img src="insignia.png" 
+                     alt="Zumaeta Logo Footer" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/48x48/141418/f4a261?text=K';" 
+                     class="h-12 w-12 rounded-full border border-kenpo-orange/30">
+                <div>
+                    <h5 class="font-heading font-bold text-white text-lg tracking-wider">ZUMAETA KENPO STUDIO</h5>
+                    <p class="text-xs text-gray-500">© 2026 Todos los derechos reservados. Arte Marcial & Defensa Personal.</p>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex space-x-6 text-gray-400 text-xl">
+                <a href="https://www.instagram.com/rzkenpo/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Zumaeta Kenpo" class="hover:text-kenpo-orange transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/rodrigo.a.zumaeta" target="_blank" rel="noopener noreferrer" aria-label="Facebook Zumaeta Kenpo" class="hover:text-kenpo-red transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://wa.me/56932291414?text=Hola,%20quisiera%20solicitar%20informaci%C3%B3n%20sobre%20las%20clases" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Zumaeta Kenpo" class="hover:text-emerald-500 transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Vista ampliada de imagen" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <button id="lightbox-close" aria-label="Cerrar imagen" class="absolute top-5 right-5 z-10 text-gray-300 hover:text-white text-xl w-10 h-10 rounded-full bg-kenpo-card/80 border border-kenpo-cardBorder flex items-center justify-center transition-colors cursor-pointer">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <figure class="w-full max-w-3xl flex flex-col items-center gap-4">
+            <img id="lightbox-img" src="" alt="" class="max-h-[75vh] w-auto max-w-full object-contain rounded-2xl border border-kenpo-orange/30 shadow-2xl bg-black">
+            <figcaption id="lightbox-caption" class="text-xs text-gray-300 text-center"></figcaption>
+        </figure>
+    </div>
+
+    <!-- MODAL FOR TRIAL CLASS BOOKING -->
+    <div id="booking-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="booking-modal-title" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity">
+        <div class="bg-kenpo-card border border-kenpo-cardBorder rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl shadow-glow-red my-auto transform transition-all scale-95 opacity-0 duration-300" id="modal-content">
+            <!-- Close Button -->
+            <button onclick="closeModal()" aria-label="Cerrar ventana" class="absolute top-5 right-5 text-gray-400 hover:text-white text-xl w-8 h-8 rounded-full bg-kenpo-bg/60 border border-kenpo-cardBorder flex items-center justify-center transition-colors cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Header Modal -->
+            <div class="text-center mb-6">
+                <img src="insignia.png" 
+                     alt="Insignia Zumaeta Modal" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/64x64/141418/f4a261?text=K';" 
+                     class="w-16 h-16 mx-auto mb-3 rounded-full border border-kenpo-orange/40 bg-black p-1 shadow-md">
+                <h3 id="booking-modal-title" class="font-heading text-2xl font-bold text-white uppercase tracking-wide">Reserva Tu Clase Gratis</h3>
+                <p class="text-xs text-kenpo-orange font-medium mt-1">¡Sin compromiso! Confirma tu cupo directo por WhatsApp.</p>
+            </div>
+
+            <!-- Booking Form (Redirects to WhatsApp with structured data) -->
+            <form onsubmit="handleBookingWhatsApp(event)" class="space-y-4">
+                <div>
+                    <label for="modal-name" class="block text-xs font-semibold text-gray-300 uppercase mb-1">Nombre del Alumno/a *</label>
+                    <input type="text" id="modal-name" name="alumno" required placeholder="Ej: Juan Pérez" class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="modal-age" class="block text-xs font-semibold text-gray-300 uppercase mb-1">Edad *</label>
+                        <input type="number" id="modal-age" name="edad" min="3" max="99" required placeholder="Ej: 10" class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors">
+                    </div>
+                    <div>
+                        <label for="modal-phone" class="block text-xs font-semibold text-gray-300 uppercase mb-1">Teléfono / WhatsApp *</label>
+                        <input type="tel" id="modal-phone" name="telefono" required placeholder="+56 9 ..." class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="modal-program" class="block text-xs font-semibold text-gray-300 uppercase mb-1">Programa de Interés *</label>
+                    <select id="modal-program" name="programa" required class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors">
+                        <option value="Kenpo Infantil (3 a 12 Años)">Kenpo Infantil (3 a 12 Años)</option>
+                        <option value="Kenpo Adultos & Jóvenes" selected>Kenpo Adultos & Jóvenes</option>
+                        <option value="Defensa Personal Avanzada">Defensa Personal Avanzada</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="modal-schedule" class="block text-xs font-semibold text-gray-300 uppercase mb-1">Horario Preferido</label>
+                    <select id="modal-schedule" name="horario" class="w-full bg-kenpo-bg border border-kenpo-cardBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-kenpo-orange transition-colors">
+                        <option value="Tarde (16:30 - 17:30)">Tarde (16:30 - 17:30)</option>
+                        <option value="Tarde (18:00 - 19:15)" selected>Tarde (18:00 - 19:15)</option>
+                        <option value="Noche (19:30 - 21:00)">Noche (19:30 - 21:00)</option>
+                        <option value="Sábado Mañana (10:00 AM)">Sábado Mañana (10:00 AM)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full mt-2 bg-gradient-to-r from-kenpo-red to-kenpo-redHover hover:from-red-600 hover:to-kenpo-red text-white font-bold py-3.5 px-6 rounded-xl uppercase text-xs tracking-wider transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-base"></i> Confirmar Reserva por WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Número de WhatsApp de la academia (formato internacional sin +)
+        const STUDIO_WHATSAPP = "56932291414";
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const navbar = document.getElementById('navbar');
+        const progressBar = document.getElementById('scroll-progress');
+        const backToTop = document.getElementById('back-to-top');
+        const backTopRing = document.getElementById('back-top-ring');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileIcon = document.getElementById('mobile-menu-icon');
+        const bookingModal = document.getElementById('booking-modal');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const sections = [...document.querySelectorAll('section[id]')];
+        const navLinks = [...document.querySelectorAll('.nav-link')];
+        const revealEls = [];
+        let lastFocused = null;
+
+        /* ---------- Navbar, progreso y link activo ---------- */
+        let ticking = false;
+
+        function onScroll() {
+            const y = window.scrollY;
+
+            navbar.classList.toggle('scrolled', y > 24);
+            backToTop.classList.toggle('show', y > 600);
+
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const ratio = max > 0 ? Math.min(y / max, 1) : 0;
+            progressBar.style.width = `${ratio * 100}%`;
+            if (backTopRing) backTopRing.style.strokeDashoffset = `${119.38 * (1 - ratio)}`;
+
+            const probe = y + 140;
+            let current = sections.length ? sections[0].id : '';
+            sections.forEach(sec => { if (probe >= sec.offsetTop) current = sec.id; });
+            if (sections.length && window.innerHeight + y >= document.documentElement.scrollHeight - 4) {
+                current = sections[sections.length - 1].id;
+            }
+            navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${current}`));
+
+            // Respaldo: si el usuario salta rápido, nada queda oculto
+            revealEls.forEach(el => {
+                if (!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight - 40) {
+                    el.classList.add('in');
+                }
+            });
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(onScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+        onScroll();
+
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /* ---------- Menú móvil ---------- */
+        function toggleMobileMenu(force) {
+            const open = typeof force === 'boolean' ? force : !mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open', open);
+            mobileBtn.setAttribute('aria-expanded', String(open));
+            mobileBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+            mobileIcon.className = open ? 'fa-solid fa-xmark text-xl' : 'fa-solid fa-bars text-xl';
+        }
+
+        document.addEventListener('click', (event) => {
+            if (mobileMenu.classList.contains('open') && !navbar.contains(event.target)) {
+                toggleMobileMenu(false);
+            }
+        });
+
+        /* ---------- Reveal al hacer scroll ---------- */
+        const revealSelectors = [
+            '#filosofia .text-center.max-w-3xl',
+            '#filosofia .grid > div',
+            '#profesor .text-center.max-w-3xl',
+            '#profesor .grid > div',
+            '#programas .text-center.max-w-3xl',
+            '#programas .grid > div',
+            '#programas #camino',
+            '#horarios .text-center.max-w-3xl',
+            '#horarios .overflow-x-auto',
+            '#horarios .space-y-4 > .faq-item',
+            '#contacto .grid > div'
+        ];
+
+        revealSelectors.forEach(selector => {
+            document.querySelectorAll(selector).forEach((el, index) => {
+                el.classList.add('reveal');
+                el.style.setProperty('--reveal-delay', `${(index % 4) * 80}ms`);
+                revealEls.push(el);
+            });
+        });
+
+        if ('IntersectionObserver' in window && !reduceMotion) {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+            revealEls.forEach(el => revealObserver.observe(el));
+        } else {
+            revealEls.forEach(el => el.classList.add('in'));
+        }
+
+        // Brillo en tarjetas de programas
+        document.querySelectorAll('#programas .grid > div').forEach(card => {
+            card.classList.add('shine');
+            if (card.classList.contains('border-kenpo-red')) card.classList.add('card-popular');
+        });
+
+        /* ---------- Contadores ---------- */
+        function animateCounter(el) {
+            const target = parseInt(el.dataset.count, 10) || 0;
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            const duration = 1500;
+            const start = performance.now();
+
+            function frame(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = `${prefix}${Math.round(target * eased)}${suffix}`;
+                if (progress < 1) requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
+        }
+
+        const counters = [...document.querySelectorAll('[data-count]')];
+        if (reduceMotion) {
+            // Deja los valores finales tal cual están en el HTML
+        } else if ('IntersectionObserver' in window) {
+            const counterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => animateCounter(entry.target), 650);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.6 });
+            counters.forEach(counter => counterObserver.observe(counter));
+        } else {
+            counters.forEach(animateCounter);
+        }
+
+        /* ---------- FAQ animado ---------- */
+        const faqItems = [...document.querySelectorAll('.faq-item')];
+        faqItems.forEach((item, index) => {
+            const btn = item.querySelector('button');
+            const content = item.querySelector('.faq-content');
+            if (!btn || !content) return;
+
+            content.id = `faq-panel-${index}`;
+            btn.setAttribute('aria-controls', content.id);
+            btn.setAttribute('aria-expanded', 'false');
+            content.style.maxHeight = '0px';
+
+            content.addEventListener('transitionend', (event) => {
+                if (event.propertyName === 'max-height' && item.classList.contains('open')) {
+                    content.style.maxHeight = 'none';
+                }
+            });
+        });
+
+        function closeFaq(item) {
+            const content = item.querySelector('.faq-content');
+            const btn = item.querySelector('button');
+            item.classList.remove('open');
+
+            if (content.style.maxHeight === 'none') {
+                content.style.maxHeight = `${content.scrollHeight}px`;
+                requestAnimationFrame(() => { content.style.maxHeight = '0px'; });
+            } else {
+                content.style.maxHeight = '0px';
+            }
+
+            if (btn) {
+                btn.setAttribute('aria-expanded', 'false');
+                btn.querySelector('i')?.classList.remove('rotate-180');
+            }
+        }
+
+        function toggleFaq(button) {
+            const item = button.closest('.faq-item');
+            const content = item.querySelector('.faq-content');
+            const icon = button.querySelector('i');
+            const willOpen = !item.classList.contains('open');
+
+            document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                if (openItem !== item) closeFaq(openItem);
+            });
+
+            if (willOpen) {
+                item.classList.add('open');
+                content.style.maxHeight = `${content.scrollHeight}px`;
+                button.setAttribute('aria-expanded', 'true');
+                icon.classList.add('rotate-180');
+            } else {
+                closeFaq(item);
+            }
+        }
+
+        /* ---------- Próxima clase en vivo ---------- */
+        const CLASS_SCHEDULE = [
+            { days: [1, 3], start: '16:30', end: '17:30', name: 'Kenpo Infantil · 3 a 6 años', program: 'Kenpo Infantil' },
+            { days: [1, 3], start: '18:00', end: '19:15', name: 'Kenpo Adultos · Principiantes', program: 'Kenpo Adultos' },
+            { days: [1, 3], start: '19:30', end: '21:00', name: 'Kenpo Adultos · Avanzado', program: 'Kenpo Adultos' },
+            { days: [2, 4], start: '16:30', end: '17:30', name: 'Kenpo Infantil · 7 a 12 años', program: 'Kenpo Infantil' },
+            { days: [2, 4], start: '18:00', end: '19:15', name: 'Técnicas de Defensa Personal', program: 'Defensa Personal' },
+            { days: [2, 4], start: '19:30', end: '21:00', name: 'Combate & Sparring Táctico', program: 'Defensa Personal' },
+            { days: [6], start: '10:00', end: '11:30', name: 'Kenpo Mixto · Sábado', program: 'Kenpo Adultos' }
+        ];
+
+        let nextClass = null;
+        const nextClassName = document.getElementById('next-class-name');
+        const nextClassWhen = document.getElementById('next-class-when');
+        const nextClassCountdown = document.getElementById('next-class-countdown');
+
+        function getNextClass(now = new Date()) {
+            let best = null;
+            for (let offset = 0; offset < 8; offset++) {
+                const base = new Date(now);
+                base.setDate(now.getDate() + offset);
+                CLASS_SCHEDULE.forEach(slot => {
+                    if (!slot.days.includes(base.getDay())) return;
+                    const [hours, minutes] = slot.start.split(':').map(Number);
+                    const start = new Date(base);
+                    start.setHours(hours, minutes, 0, 0);
+                    if (start <= now) return;
+                    if (!best || start < best.start) best = { ...slot, start };
+                });
+                if (best) break;
+            }
+            return best;
+        }
+
+        function formatClassDay(date) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const target = new Date(date);
+            target.setHours(0, 0, 0, 0);
+            const diff = Math.round((target - today) / 86400000);
+            const names = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const day = diff === 0 ? 'Hoy' : diff === 1 ? 'Mañana' : names[date.getDay()];
+            return `${day} · ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function formatCountdown(ms) {
+            const minutes = Math.max(1, Math.round(ms / 60000));
+            if (minutes < 60) return `en ${minutes} min`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) {
+                const rest = minutes % 60;
+                return rest ? `en ${hours} h ${rest} min` : `en ${hours} h`;
+            }
+            const days = Math.floor(hours / 24);
+            const rest = hours % 24;
+            return rest ? `en ${days} d ${rest} h` : `en ${days} d`;
+        }
+
+        function updateNextClass() {
+            nextClass = getNextClass();
+            if (!nextClass || !nextClassName) return;
+            nextClassName.textContent = nextClass.name;
+            nextClassWhen.textContent = formatClassDay(nextClass.start);
+            nextClassCountdown.textContent = formatCountdown(nextClass.start - new Date());
+        }
+
+        function bookNextClass() {
+            if (!nextClass) updateNextClass();
+            openModal(nextClass ? nextClass.program : '');
+        }
+
+        function downloadNextClassIcs() {
+            if (!nextClass) updateNextClass();
+            if (!nextClass) return;
+
+            const end = new Date(nextClass.start.getTime() + 75 * 60000);
+            const stamp = date => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            const ics = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Zumaeta Kenpo Studio//ES',
+                'CALSCALE:GREGORIAN',
+                'BEGIN:VEVENT',
+                `UID:${Date.now()}@zumaetakenpo.cl`,
+                `DTSTAMP:${stamp(new Date())}`,
+                `DTSTART:${stamp(nextClass.start)}`,
+                `DTEND:${stamp(end)}`,
+                'SUMMARY:Clase de prueba · Zumaeta Kenpo Studio',
+                `DESCRIPTION:${nextClass.name}. Clase de prueba gratuita.`,
+                'LOCATION:Av. Principal Marcial #1234\\, Santiago\\, Chile',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'zumaeta-proxima-clase.ics';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
+            showToast('Evento descargado. Ábrelo para agregarlo a tu calendario.');
+        }
+
+        updateNextClass();
+        setInterval(updateNextClass, 60000);
+
+        /* ---------- Estado del estudio ---------- */
+        function updateStudioStatus() {
+            const status = document.getElementById('studio-status');
+            const text = document.getElementById('studio-status-text');
+            const dot = document.getElementById('studio-status-dot');
+            if (!status || !text || !dot) return;
+
+            const now = new Date();
+            const day = now.getDay();
+            const minutes = now.getHours() * 60 + now.getMinutes();
+            let open = false;
+
+            if (day >= 1 && day <= 5) open = minutes >= 16 * 60 && minutes <= 21 * 60 + 15;
+            if (day === 6) open = minutes >= 9 * 60 + 30 && minutes <= 12 * 60;
+
+            text.textContent = open ? 'Abierto ahora' : 'Cerrado ahora';
+            status.classList.toggle('text-emerald-400', open);
+            status.classList.toggle('text-gray-400', !open);
+            dot.classList.toggle('text-emerald-500', open);
+            dot.classList.toggle('text-gray-500', !open);
+        }
+
+        updateStudioStatus();
+        setInterval(updateStudioStatus, 60000);
+
+        /* ---------- Quiz: encuentra tu camino ---------- */
+        const quizData = [
+            {
+                key: 'who',
+                title: '¿Para quién es la clase?',
+                options: [
+                    { label: 'Un niño o niña (3–12 años)', value: 'child', icon: 'fa-child-reaching' },
+                    { label: 'Joven o adulto', value: 'adult', icon: 'fa-user' },
+                    { label: 'Grupo familiar', value: 'family', icon: 'fa-people-group' }
+                ]
+            },
+            {
+                key: 'goal',
+                title: '¿Cuál es el objetivo principal?',
+                options: [
+                    { label: 'Disciplina y confianza', value: 'confidence', icon: 'fa-brain' },
+                    { label: 'Defensa personal', value: 'defense', icon: 'fa-shield-halved' },
+                    { label: 'Ponerse en forma', value: 'fitness', icon: 'fa-dumbbell' }
+                ]
+            },
+            {
+                key: 'exp',
+                title: '¿Cuánta experiencia tienen?',
+                options: [
+                    { label: 'Desde cero', value: 'beginner', icon: 'fa-seedling' },
+                    { label: 'Algo de experiencia', value: 'some', icon: 'fa-bolt' }
+                ]
+            }
+        ];
+
+        const quizAnswers = {};
+        let quizStep = 0;
+        const quizBody = document.getElementById('quiz-body');
+        const quizBottom = document.getElementById('quiz-bottom');
+        const quizProgress = document.getElementById('quiz-progress');
+
+        function renderQuiz() {
+            if (!quizBody) return;
+
+            const question = quizData[quizStep];
+            quizBody.innerHTML = `
+                <div class="quiz-enter">
+                    <h4 class="font-heading text-xl sm:text-2xl font-bold text-white uppercase mb-4">${question.title}</h4>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        ${question.options.map(option => `
+                            <button type="button" data-quiz-answer="${option.value}" data-quiz-key="${question.key}"
+                                    class="quiz-option flex-1 flex items-center gap-3 sm:flex-col sm:items-start sm:gap-2 bg-kenpo-card/80 border border-kenpo-cardBorder rounded-xl px-4 py-3 text-left hover:bg-kenpo-cardHover cursor-pointer">
+                                <span class="w-9 h-9 rounded-lg bg-kenpo-orange/10 text-kenpo-orange flex items-center justify-center shrink-0"><i class="fa-solid ${option.icon}"></i></span>
+                                <span class="text-sm font-semibold text-gray-200">${option.label}</span>
+                            </button>`).join('')}
+                    </div>
+                </div>`;
+
+            [...quizProgress.children].forEach((bar, index) => {
+                bar.classList.toggle('bg-kenpo-orange', index <= quizStep);
+                bar.classList.toggle('bg-kenpo-cardBorder', index > quizStep);
+            });
+
+            quizBottom.innerHTML = `
+                <button type="button" data-quiz-back class="text-xs uppercase tracking-wider font-semibold ${quizStep === 0 ? 'text-gray-600 cursor-not-allowed' : 'text-gray-400 hover:text-white transition-colors cursor-pointer'}" ${quizStep === 0 ? 'disabled' : ''}>
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Atrás
+                </button>
+                <span class="text-[11px] uppercase tracking-widest text-gray-500">Paso ${quizStep + 1} de ${quizData.length}</span>`;
+        }
+
+        function getQuizResult() {
+            if (quizAnswers.who === 'child') {
+                return {
+                    program: 'Kenpo Infantil',
+                    title: 'Kenpo Infantil · Dragones y Tigres',
+                    desc: 'Ideal para desarrollar disciplina, coordinación, confianza y herramientas anti-bullying en un ambiente seguro y entretenido.',
+                    icon: 'fa-child-reaching',
+                    accent: 'text-kenpo-orange bg-kenpo-orange/10 border-kenpo-orange/30'
+                };
+            }
+            if (quizAnswers.goal === 'defense' && quizAnswers.exp === 'some') {
+                return {
+                    program: 'Defensa Personal',
+                    title: 'Defensa Personal & Combate',
+                    desc: 'Tu base previa encaja perfecto con escenarios reales, control de distancia, sparring táctico y trabajo bajo presión.',
+                    icon: 'fa-shield-halved',
+                    accent: 'text-kenpo-red bg-kenpo-red/10 border-kenpo-red/30'
+                };
+            }
+            return {
+                program: 'Kenpo Adultos',
+                title: 'Kenpo Adultos & Jóvenes',
+                desc: 'Un camino completo desde cero: técnica, acondicionamiento físico, defensa personal y progresión por grados a tu ritmo.',
+                icon: 'fa-user-ninja',
+                accent: 'text-kenpo-goldLight bg-kenpo-gold/10 border-kenpo-gold/30'
+            };
+        }
+
+        function renderQuizResult() {
+            if (!quizBody) return;
+            const result = getQuizResult();
+
+            quizBody.innerHTML = `
+                <div class="quiz-enter">
+                    <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-kenpo-goldLight bg-kenpo-gold/10 border border-kenpo-gold/30 px-3 py-1 rounded-full mb-4">
+                        <i class="fa-solid fa-circle-check"></i> Programa recomendado
+                    </span>
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 rounded-2xl border flex items-center justify-center text-2xl shrink-0 ${result.accent}">
+                            <i class="fa-solid ${result.icon}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading text-xl sm:text-2xl font-bold text-white uppercase leading-tight">${result.title}</h4>
+                            <p class="text-sm text-gray-400 mt-2 leading-relaxed">${result.desc}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 mt-5">
+                        <button type="button" data-quiz-book="${result.program}" class="flex-1 bg-gradient-to-r from-kenpo-red to-kenpo-redHover hover:from-red-600 hover:to-kenpo-red text-white font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer">
+                            <i class="fa-solid fa-calendar-check mr-1.5"></i> Reservar clase gratis
+                        </button>
+                        <a data-quiz-wa="${result.title}" href="#" class="flex-1 bg-kenpo-card hover:bg-kenpo-cardHover text-gray-200 border border-kenpo-cardBorder hover:border-kenpo-orange/50 font-semibold py-3 px-4 rounded-xl text-xs uppercase tracking-wider text-center transition-all">
+                            <i class="fa-brands fa-whatsapp mr-1.5"></i> Consultar por WhatsApp
+                        </a>
+                    </div>
+                </div>`;
+
+            [...quizProgress.children].forEach(bar => {
+                bar.classList.remove('bg-kenpo-cardBorder');
+                bar.classList.add('bg-kenpo-orange');
+            });
+
+            quizBottom.innerHTML = `
+                <button type="button" data-quiz-restart class="text-xs uppercase tracking-wider font-semibold text-gray-400 hover:text-white transition-colors cursor-pointer">
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Volver a empezar
+                </button>
+                <span class="text-[11px] uppercase tracking-widest text-kenpo-orange">Resultado listo</span>`;
+        }
+
+        if (quizBody) {
+            renderQuiz();
+
+            quizBody.addEventListener('click', (event) => {
+                const answer = event.target.closest('[data-quiz-answer]');
+                if (answer) {
+                    quizAnswers[answer.dataset.quizKey] = answer.dataset.quizAnswer;
+                    if (quizStep < quizData.length - 1) {
+                        quizStep += 1;
+                        renderQuiz();
+                    } else {
+                        renderQuizResult();
+                    }
+                    return;
+                }
+
+                const book = event.target.closest('[data-quiz-book]');
+                if (book) openModal(book.dataset.quizBook);
+
+                const wa = event.target.closest('[data-quiz-wa]');
+                if (wa) {
+                    event.preventDefault();
+                    const text = `Hola Profesor Zumaeta, hice el test de la web y me recomendó *${wa.dataset.quizWa}*. Quisiera más información.`;
+                    window.open(`https://wa.me/${STUDIO_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+                }
+            });
+
+            quizBottom.addEventListener('click', (event) => {
+                if (event.target.closest('[data-quiz-back]') && quizStep > 0) {
+                    quizStep -= 1;
+                    renderQuiz();
+                }
+                if (event.target.closest('[data-quiz-restart]')) {
+                    quizStep = 0;
+                    Object.keys(quizAnswers).forEach(key => delete quizAnswers[key]);
+                    renderQuiz();
+                }
+            });
+        }
+
+        /* ---------- Lightbox ---------- */
+        function openLightbox(src, caption, alt) {
+            if (!lightbox || !src) return;
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || caption || '';
+            lightboxCaption.textContent = caption || '';
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            lastFocused = document.activeElement;
+            lightboxClose.focus();
+        }
+
+        function closeLightbox() {
+            if (!lightbox || lightbox.classList.contains('hidden')) return;
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastFocused) lastFocused.focus();
+        }
+
+        document.querySelectorAll('[data-lightbox]').forEach(el => {
+            const open = () => openLightbox(el.dataset.lightbox, el.dataset.lightboxCaption, el.querySelector('img')?.alt);
+            el.addEventListener('click', open);
+            el.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    open();
+                }
+            });
+        });
+
+        if (lightbox) {
+            lightbox.addEventListener('click', (event) => {
+                if (event.target === event.currentTarget) closeLightbox();
+            });
+            lightboxClose.addEventListener('click', closeLightbox);
+        }
+
+        /* ---------- Efecto 3D en tarjetas ---------- */
+        if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            document.querySelectorAll('#programas .grid > div').forEach(card => {
+                card.classList.add('tilt-card');
+                card.addEventListener('pointermove', (event) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = (event.clientX - rect.left) / rect.width - 0.5;
+                    const y = (event.clientY - rect.top) / rect.height - 0.5;
+                    card.style.transition = 'transform .12s ease-out';
+                    card.style.transform = `perspective(900px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg) translateY(-4px)`;
+                });
+                card.addEventListener('pointerleave', () => {
+                    card.style.transition = 'transform .5s cubic-bezier(.22, 1, .36, 1)';
+                    card.style.transform = '';
+                });
+            });
+        }
+
+        /* ---------- Spotlight y partículas del hero ---------- */
+        const heroSection = document.getElementById('inicio');
+        const heroSpot = document.getElementById('hero-spotlight');
+
+        if (heroSection && heroSpot && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+            let spotFrame = null;
+            heroSection.addEventListener('pointermove', (event) => {
+                const rect = heroSection.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                if (spotFrame) return;
+                spotFrame = requestAnimationFrame(() => {
+                    heroSpot.style.setProperty('--mx', `${x}px`);
+                    heroSpot.style.setProperty('--my', `${y}px`);
+                    spotFrame = null;
+                });
+            });
+        }
+
+        const particleCanvas = document.getElementById('hero-particles');
+        if (particleCanvas) {
+            const ctx = particleCanvas.getContext('2d');
+            let particles = [];
+            let frameId = null;
+            let running = false;
+
+            const makeParticle = (w, h, spread) => {
+                const roll = Math.random();
+                if (roll < 0.4) {
+                    // Ceniza: copo pálido que cae con vaivén y gira sobre sí mismo
+                    return {
+                        kind: 'ash',
+                        x: Math.random() * w,
+                        y: spread ? Math.random() * h : -14,
+                        r: Math.random() * 1.3 + 1.1,
+                        speed: Math.random() * 0.32 + 0.16,
+                        alpha: Math.random() * 0.28 + 0.3,
+                        sway: Math.random() * Math.PI * 2,
+                        swing: Math.random() * 0.3 + 0.12,
+                        rot: Math.random() * Math.PI,
+                        spin: (Math.random() - 0.5) * 0.02
+                    };
+                }
+                const ember = roll < 0.72;
+                return {
+                    kind: ember ? 'ember' : 'dust',
+                    x: Math.random() * w,
+                    y: spread ? (ember ? h * (0.5 + Math.random() * 0.5) : Math.random() * h) : h + 10,
+                    r: ember ? Math.random() * 1.2 + 1 : Math.random() * 1.8 + 0.6,
+                    speed: ember ? Math.random() * 0.55 + 0.4 : Math.random() * 0.25 + 0.12,
+                    alpha: ember ? Math.random() * 0.4 + 0.55 : Math.random() * 0.4 + 0.15,
+                    sway: Math.random() * Math.PI * 2,
+                    hue: ember
+                        ? (Math.random() > 0.45 ? '255, 168, 92' : '255, 205, 90')
+                        : (Math.random() > 0.5 ? '244, 162, 97' : '230, 57, 70')
+                };
+            };
+
+            const resizeParticles = () => {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const rect = particleCanvas.getBoundingClientRect();
+                particleCanvas.width = Math.max(1, rect.width * dpr);
+                particleCanvas.height = Math.max(1, rect.height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                const count = rect.width < 640 ? 30 : rect.width < 1024 ? 46 : 64;
+                particles = Array.from({ length: count }, () => makeParticle(rect.width, rect.height, true));
+            };
+
+            const paintParticles = () => {
+                const w = particleCanvas.clientWidth;
+                const h = particleCanvas.clientHeight;
+                // Las cenizas siguen cayendo con movimiento reducido, solo más despacio
+                const pace = reduceMotion ? 0.5 : 1;
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => {
+                    if (p.kind === 'ash') {
+                        p.y += p.speed * pace;
+                        p.sway += 0.02 * pace;
+                        p.x += Math.sin(p.sway) * p.swing * pace;
+                        p.rot += p.spin * pace;
+                        if (p.y > h + 14 || p.x < -24 || p.x > w + 24) {
+                            Object.assign(p, makeParticle(w, h, false));
+                        }
+                        // Se calienta al atravesar la franja del fuego
+                        const heat = Math.max(0, 1 - (h - p.y) / (h * 0.45));
+                        const hue = heat > 0.45 ? '255, 186, 128' : '222, 226, 232';
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate(p.rot);
+                        ctx.beginPath();
+                        ctx.fillStyle = `rgba(${hue}, ${p.alpha * 0.16})`;
+                        ctx.arc(0, 0, p.r * 3.2, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.fillStyle = `rgba(${hue}, ${p.alpha * (0.85 + heat * 0.45)})`;
+                        ctx.ellipse(0, 0, p.r * 1.6, p.r * 0.55, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.restore();
+                        return;
+                    }
+                    p.y -= p.speed * pace;
+                    p.sway += (p.kind === 'ember' ? 0.045 : 0.012) * pace;
+                    p.x += Math.sin(p.sway) * (p.kind === 'ember' ? 0.4 : 0.18) * pace;
+                    if (p.y < -8 || p.x < -8 || p.x > w + 8) {
+                        Object.assign(p, makeParticle(w, h, false));
+                    }
+                    const flicker = p.kind === 'ember'
+                        ? (reduceMotion ? 0.9 : 0.55 + 0.45 * Math.sin(p.sway * 2.3))
+                        : 1;
+                    if (p.kind === 'ember') {
+                        // Llama: cola afinada, halo cálido y núcleo brillante
+                        ctx.beginPath();
+                        ctx.moveTo(p.x - p.r * 0.7, p.y);
+                        ctx.lineTo(p.x + p.r * 0.7, p.y);
+                        ctx.lineTo(p.x + Math.sin(p.sway) * 1.5, p.y + p.r * 5.5);
+                        ctx.closePath();
+                        ctx.fillStyle = `rgba(${p.hue}, ${p.alpha * flicker * 0.16})`;
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.fillStyle = `rgba(${p.hue}, ${p.alpha * flicker * 0.3})`;
+                        ctx.arc(p.x, p.y, p.r * 4.5, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.fillStyle = `rgba(255, 236, 200, ${p.alpha * flicker * 0.85})`;
+                        ctx.arc(p.x, p.y, p.r * 0.55, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(${p.hue}, ${p.alpha * flicker})`;
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            };
+
+            const animateParticles = () => {
+                paintParticles();
+                frameId = requestAnimationFrame(animateParticles);
+            };
+
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !running) {
+                            running = true;
+                            animateParticles();
+                        } else if (!entry.isIntersecting && running) {
+                            running = false;
+                            cancelAnimationFrame(frameId);
+                        }
+                    });
+                }, { threshold: 0 }).observe(particleCanvas);
+            } else {
+                running = true;
+                animateParticles();
+            }
+
+            resizeParticles();
+            window.addEventListener('resize', resizeParticles);
+        }
+
+        /* ---------- Llamas del hero ---------- */
+        const fireCanvas = document.getElementById('hero-fire');
+        if (fireCanvas) {
+            const fctx = fireCanvas.getContext('2d');
+            const makeSprite = (rgb) => {
+                const c = document.createElement('canvas');
+                c.width = c.height = 64;
+                const g = c.getContext('2d');
+                const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+                grad.addColorStop(0, `rgba(${rgb}, 1)`);
+                grad.addColorStop(0.38, `rgba(${rgb}, .5)`);
+                grad.addColorStop(1, `rgba(${rgb}, 0)`);
+                g.fillStyle = grad;
+                g.fillRect(0, 0, 64, 64);
+                return c;
+            };
+            const sprites = [
+                makeSprite('255, 247, 214'),
+                makeSprite('255, 196, 96'),
+                makeSprite('255, 126, 50'),
+                makeSprite('226, 62, 32')
+            ];
+
+            let flames = [];
+            let fireFrame = null;
+            let fireRunning = false;
+            let fireAcc = 0;
+            let fireLast = 0;
+
+            const spawnFlame = (w, h) => {
+                const cols = 9;
+                const col = Math.floor(Math.random() * cols);
+                return {
+                    x: (col + 0.5) / cols * w + (Math.random() - 0.5) * Math.max(30, w * 0.05),
+                    y: h + 8 + Math.random() * 14,
+                    vx: (Math.random() - 0.5) * 0.32,
+                    vy: -(1.6 + Math.random() * 1.6),
+                    size: 18 + Math.random() * 30,
+                    life: 0,
+                    maxLife: 60 + Math.random() * 60,
+                    seed: Math.random() * Math.PI * 2,
+                    sway: 0.5 + Math.random() * 1.2
+                };
+            };
+
+            const drawFlame = (p, t) => {
+                const k = Math.min(1, p.life / p.maxLife);
+                const alpha = Math.pow(1 - k, 1.25) * 0.8;
+                if (alpha < 0.012) return;
+                const sprite = sprites[Math.min(sprites.length - 1, Math.floor(k * sprites.length))];
+                const sw = p.size * (1 + k * 0.9);
+                const sh = sw * 1.45;
+                fctx.globalAlpha = alpha * (0.85 + 0.15 * Math.sin(t * 0.004 + p.seed));
+                fctx.drawImage(sprite, p.x - sw / 2, p.y - sh / 2, sw, sh);
+            };
+
+            const paintFire = (dt, t) => {
+                const w = fireCanvas.clientWidth;
+                const h = fireCanvas.clientHeight;
+                fctx.clearRect(0, 0, w, h);
+                fctx.globalCompositeOperation = 'lighter';
+                // Lecho de brasas: banda luminosa continua en la base
+                const bed = fctx.createLinearGradient(0, h, 0, h - 190);
+                bed.addColorStop(0, 'rgba(255, 196, 100, .5)');
+                bed.addColorStop(0.45, 'rgba(255, 120, 45, .22)');
+                bed.addColorStop(1, 'rgba(255, 90, 40, 0)');
+                fctx.fillStyle = bed;
+                fctx.fillRect(0, h - 190, w, 190);
+                if (!reduceMotion) {
+                    const rate = w < 640 ? 72 : 132;
+                    fireAcc += dt / 1000 * rate;
+                    while (fireAcc >= 1 && flames.length < 240) {
+                        flames.push(spawnFlame(w, h));
+                        fireAcc -= 1;
+                    }
+                }
+                const step = Math.min(dt, 34) / 16.7;
+                flames = flames.filter(p => {
+                    if (!reduceMotion) {
+                        p.life += step;
+                        p.y += p.vy * step;
+                        p.x += p.vx * step + Math.sin(t * 0.0022 + p.seed) * 0.25 * p.sway * step;
+                        p.size += 0.16 * step;
+                        if (p.life >= p.maxLife || p.y < -40) return false;
+                    }
+                    drawFlame(p, t);
+                    return true;
+                });
+                fctx.globalAlpha = 1;
+                fctx.globalCompositeOperation = 'source-over';
+            };
+
+            const seedStaticFire = () => {
+                const w = fireCanvas.clientWidth;
+                const h = fireCanvas.clientHeight;
+                flames = Array.from({ length: 100 }, () => {
+                    const p = spawnFlame(w, h);
+                    p.life = Math.random() * p.maxLife;
+                    p.y -= p.life * 1.55;
+                    p.x += Math.sin(p.seed + p.life * 0.06) * 8;
+                    p.size += p.life * 0.18;
+                    return p;
+                });
+            };
+
+            const resizeFire = () => {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const rect = fireCanvas.getBoundingClientRect();
+                fireCanvas.width = Math.max(1, rect.width * dpr);
+                fireCanvas.height = Math.max(1, rect.height * dpr);
+                fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                flames = [];
+                fireAcc = 0;
+                if (reduceMotion) {
+                    seedStaticFire();
+                    paintFire(0, 1);
+                }
+            };
+
+            const animateFire = (t) => {
+                const dt = Math.min(Math.max(t - (fireLast || t), 0), 50);
+                fireLast = t;
+                paintFire(dt, t);
+                fireFrame = requestAnimationFrame(animateFire);
+            };
+
+            if (reduceMotion) {
+                resizeFire();
+                window.addEventListener('resize', resizeFire);
+            } else {
+                new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !fireRunning) {
+                            fireRunning = true;
+                            fireLast = 0;
+                            fireFrame = requestAnimationFrame(animateFire);
+                        } else if (!entry.isIntersecting && fireRunning) {
+                            fireRunning = false;
+                            cancelAnimationFrame(fireFrame);
+                        }
+                    });
+                }, { threshold: 0 }).observe(fireCanvas);
+
+                resizeFire();
+                window.addEventListener('resize', resizeFire);
+            }
+        }
+
+        /* ---------- Marquesina: recorrido continuo reactivo al scroll ---------- */
+        const marquee = document.querySelector('.marquee');
+        const marqueeTrack = marquee ? marquee.querySelector('.marquee-track') : null;
+        if (marquee && marqueeTrack) {
+            marqueeTrack.style.animation = 'none';
+            marqueeTrack.style.willChange = 'transform';
+
+            let mX = 0;
+            let mHalf = 0;
+            let mLastT = 0;
+            let mLastY = window.scrollY;
+            let mBoost = 0;
+            let mHover = false;
+            let mFrame = null;
+            let mRunning = false;
+
+            const measureMarquee = () => {
+                mHalf = marqueeTrack.scrollWidth / 2;
+                if (mHalf > 0) {
+                    mX = mX % mHalf;
+                    if (mX > 0) mX -= mHalf;
+                }
+            };
+
+            marquee.addEventListener('mouseenter', () => { mHover = true; });
+            marquee.addEventListener('mouseleave', () => { mHover = false; });
+
+            const paintMarquee = (t) => {
+                const dt = Math.min(Math.max(t - (mLastT || t), 0), 48);
+                mLastT = t;
+                const y = window.scrollY;
+                const vel = Math.min(Math.abs(y - mLastY), 90);
+                mLastY = y;
+                mBoost += (vel * 1.4 - mBoost) * 0.09;
+                const base = reduceMotion ? 24 : 52;
+                if (!mHover && !document.hidden && mHalf > 0) {
+                    mX -= (base + mBoost) * dt / 1000;
+                    if (mX <= -mHalf) mX += mHalf;
+                    marqueeTrack.style.transform = `translate3d(${mX}px, 0, 0)`;
+                }
+                mFrame = requestAnimationFrame(paintMarquee);
+            };
+
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !mRunning) {
+                            mRunning = true;
+                            mLastT = 0;
+                            mFrame = requestAnimationFrame(paintMarquee);
+                        } else if (!entry.isIntersecting && mRunning) {
+                            mRunning = false;
+                            cancelAnimationFrame(mFrame);
+                        }
+                    });
+                }, { threshold: 0 }).observe(marquee);
+            } else {
+                mRunning = true;
+                mFrame = requestAnimationFrame(paintMarquee);
+            }
+
+            measureMarquee();
+            window.addEventListener('resize', measureMarquee);
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureMarquee);
+        }
+
+        /* ---------- Modal ---------- */
+
+        function openModal(programName = '') {
+            const content = document.getElementById('modal-content');
+            const selectProgram = document.getElementById('modal-program');
+
+            if (programName && selectProgram) {
+                for (let i = 0; i < selectProgram.options.length; i++) {
+                    if (selectProgram.options[i].value.toLowerCase().includes(programName.toLowerCase())) {
+                        selectProgram.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            toggleMobileMenu(false);
+            lastFocused = document.activeElement;
+
+            bookingModal.classList.remove('hidden');
+            bookingModal.classList.add('flex');
+            bookingModal.setAttribute('aria-hidden', 'false');
+
+            requestAnimationFrame(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            });
+
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('modal-name').focus(), 300);
+        }
+
+        function closeModal() {
+            const content = document.getElementById('modal-content');
+            if (bookingModal.classList.contains('hidden')) return;
+
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            bookingModal.setAttribute('aria-hidden', 'true');
+
+            setTimeout(() => {
+                bookingModal.classList.remove('flex');
+                bookingModal.classList.add('hidden');
+                document.body.style.overflow = '';
+                if (lastFocused) lastFocused.focus();
+            }, 300);
+        }
+
+        bookingModal.addEventListener('click', (event) => {
+            if (event.target === event.currentTarget) closeModal();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            if (lightbox && !lightbox.classList.contains('hidden')) {
+                closeLightbox();
+            } else if (!bookingModal.classList.contains('hidden')) {
+                closeModal();
+            } else if (mobileMenu.classList.contains('open')) {
+                toggleMobileMenu(false);
+            }
+        });
+
+        /* ---------- Toast ---------- */
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            const bgColor = type === 'success'
+                ? 'bg-kenpo-card border-emerald-500/50 text-emerald-400'
+                : 'bg-kenpo-card border-kenpo-red/50 text-kenpo-red';
+            const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
+
+            toast.className = `pointer-events-auto max-w-[calc(100vw-2.5rem)] flex items-center gap-3 px-5 py-4 rounded-2xl border shadow-2xl backdrop-blur-xl text-sm font-semibold opacity-0 translate-y-3 transition-all duration-300 ${bgColor}`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-lg"></i><span></span>`;
+            toast.querySelector('span').textContent = message;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-3'));
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-3');
+                setTimeout(() => toast.remove(), 300);
+            }, 4200);
+        }
+
+        /* ---------- Envío a WhatsApp ---------- */
+        function handleContactWhatsApp(event) {
+            event.preventDefault();
+            const name = document.getElementById('contact-name').value.trim();
+            const phone = document.getElementById('contact-phone').value.trim();
+            const msg = document.getElementById('contact-message').value.trim();
+
+            const text = `Hola Profesor Zumaeta, soy *${name}* (${phone}).\n\nConsulta desde la web:\n_${msg}_`;
+            const url = `https://wa.me/${STUDIO_WHATSAPP}?text=${encodeURIComponent(text)}`;
+
+            showToast('Abriendo WhatsApp para enviar tu consulta...', 'success');
+            event.target.reset();
+            setTimeout(() => window.open(url, '_blank', 'noopener,noreferrer'), 500);
+        }
+
+        function handleBookingWhatsApp(event) {
+            event.preventDefault();
+            const name = document.getElementById('modal-name').value.trim();
+            const age = document.getElementById('modal-age').value.trim();
+            const phone = document.getElementById('modal-phone').value.trim();
+            const program = document.getElementById('modal-program').value;
+            const schedule = document.getElementById('modal-schedule').value;
+
+            const text = `¡Hola Profesor Zumaeta! Quiero agendar mi *Clase Gratis de Prueba*:\n\n` +
+                         `• *Alumno/a:* ${name} (${age} años)\n` +
+                         `• *Teléfono:* ${phone}\n` +
+                         `• *Programa:* ${program}\n` +
+                         `• *Horario preferido:* ${schedule}`;
+
+            const url = `https://wa.me/${STUDIO_WHATSAPP}?text=${encodeURIComponent(text)}`;
+
+            closeModal();
+            showToast(`¡Listo ${name}! Redirigiendo a WhatsApp para confirmar...`, 'success');
+            event.target.reset();
+            setTimeout(() => window.open(url, '_blank', 'noopener,noreferrer'), 500);
+        }
+    </script>
+</body>
+</html>
